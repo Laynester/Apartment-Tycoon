@@ -1,0 +1,250 @@
+@import url("https://fonts.googleapis.com/css?family=Rubik&display=swap");
+
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/grid";
+@import "~bootstrap/scss/utilities";
+@import "~bootstrap/scss/buttons";
+html {
+  height: 100vh;
+}
+* {
+  box-sizing: border-box;
+  font-family: "Rubik", sans-serif;
+}
+body {
+  background: #180022;
+  background-image: url("../imaging/skyline.jpg");
+  background-position: center bottom -63px;
+  background-repeat: repeat-x;
+  height: 100%;
+  background-attachment: scroll;
+  margin: 0;
+  #top {
+    position: fixed;
+    top: 5px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    .stats {
+      background: rgba(0, 0, 0, 0.9);
+      border-radius: 6px;
+      width: 100%;
+      height: 40px;
+      color: #fff;
+      line-height: 40px;
+    }
+  }
+  #app {
+    height: 100%;
+    display: flex;
+    flex-direction: column-reverse;
+    overflow-y: scroll;
+  }
+  .tower {
+    height: 100%;
+    padding-top: 50px;
+    display: flex;
+    width: 605px;
+    flex-direction: column-reverse;
+    margin: auto;
+    .floor {
+      background-color: rgba(0, 0, 0, 0.9);
+      width: 100%;
+      border: 3px solid #333;
+      border-left: 0;
+      height: 43px;
+      position: relative;
+      .window {
+        display: inline-block;
+        width: 43px;
+        height: 40px;
+        transition: background 0.1s ease-in-out;
+        position: relative;
+        overflow: hidden;
+        background-image: url("../imaging/window-dark.png");
+        &.light {
+          background-image: url("../imaging/window-light.png");
+        }
+        .person {
+          bottom: 5px;
+          margin: auto;
+          left: 0;
+          right: 0;
+          position: absolute;
+          width: 13px;
+          height: 18px;
+          transition: all 1s ease-in-out;
+          background-image: url("../imaging/person.png");
+          /*
+          animation: animateAvatar 10s infinite alternate ease-in-out;
+          */
+          opacity: 0.3;
+        }
+      }
+      &:not(:first-child) {
+        border-bottom: 0;
+      }
+      &::before {
+        content: "";
+        position: absolute;
+        width: 0;
+        right: 100%;
+        background: #222;
+        width: 30px;
+        height: 100%;
+        bottom: -3px;
+        border-bottom: 3px solid #222;
+      }
+      &:nth-last-child(2) {
+        position: relative;
+        &:before {
+          bottom: -10px;
+        }
+        &::after {
+          content: "";
+          position: absolute;
+          width: 0;
+          height: 0;
+          right: 100%;
+          top: -3px;
+          border-style: solid;
+          border-width: 10px 30px 10px 0;
+          border-color: transparent #222 transparent transparent;
+        }
+      }
+      &:hover {
+        .hover {
+          display: block;
+        }
+      }
+      .hover {
+        display: none;
+        position: absolute;
+        top: 0;
+        text-align: center;
+        left: 3px;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        line-height: 40px;
+        background-color: rgba(0, 0, 0, 0.8);
+        color: #fff;
+        &.buy {
+          display: block;
+        }
+        span {
+          padding: 0 5px;
+        }
+      }
+    }
+  }
+  .clouds {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+    .cloud-patch {
+      width: 100%;
+      position: fixed;
+      text-align: center;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      .cloud-lg {
+        position: relative;
+        margin-top: 30px;
+        margin-left: -200px;
+        background: url("../imaging/cloud1.png") no-repeat center top;
+        height: 114px;
+        width: 146px;
+        animation-duration: 30s;
+        animation-name: slidein;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+        z-index: -1;
+      }
+      .cloud-sm {
+        position: relative;
+        margin-top: 40px;
+        margin-left: -200px;
+        background: url("../imaging/cloud2.png") no-repeat center top;
+        height: 71px;
+        width: 86px;
+        animation-duration: 20s;
+        animation-name: slidein;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+        z-index: -1;
+      }
+      &:nth-of-type(2) {
+        .cloud-lg {
+          position: relative;
+          margin-top: -60px;
+          margin-left: -200px;
+          background: url("../imaging/cloud1.png") no-repeat center top;
+          height: 114px;
+          width: 146px;
+          animation-duration: 40s;
+          animation-delay: 6s;
+          animation-name: slidein;
+          animation-iteration-count: infinite;
+          animation-timing-function: linear;
+          z-index: -1;
+        }
+        .cloud-sm {
+          position: relative;
+          margin-top: 10px;
+          margin-left: -200px;
+          background: url("../imaging/cloud2.png") no-repeat center top;
+          height: 71px;
+          width: 86px;
+          animation-duration: 25s;
+          animation-name: slidein;
+          animation-delay: 12s;
+          animation-iteration-count: infinite;
+          animation-timing-function: linear;
+          z-index: -1;
+        }
+      }
+    }
+  }
+}
+@keyframes animateAvatar {
+  0% {
+    bottom: 5px;
+  }
+  25% {
+    bottom: 20px;
+    left: -50px;
+  }
+  35% {
+    bottom: 15px;
+    right: -35px;
+  }
+  50% {
+    bottom: 35px;
+    right: 0;
+  }
+  75% {
+    bottom: 3px;
+    right: -35px;
+  }
+  100% {
+    bottom: 5px;
+  }
+}
+
+@keyframes slidein {
+  from {
+    margin-left: -10%;
+  }
+
+  to {
+    margin-left: 110%;
+  }
+}
