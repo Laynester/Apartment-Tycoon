@@ -1,7 +1,10 @@
 <script>
 import "./assets/scss/app.scss";
-import window from "./templates/window";
 import clouds from "./templates/clouds";
+import lobby from "./templates/lobby";
+import floor from "./templates/floor";
+import addition from "./templates/addition";
+import top from "./templates/top";
 import { Howl } from "howler";
 
 export default {
@@ -16,16 +19,13 @@ export default {
     };
   },
   components: {
-    window,
     clouds,
+    lobby,
+    floor,
+    addition,
+    top,
   },
   methods: {
-    add() {
-      this.$store.commit("buy");
-      setTimeout(() => {
-        this.$refs["top"].scrollIntoView({ behavior: "smooth" });
-      }, 10);
-    },
     ticking() {
       setInterval(() => {
         this.$store.commit("earning");
@@ -74,86 +74,18 @@ export default {
       <button @click.prevent="play">play</button>
     </div>
     <div class="tower" v-else>
-      <div class="floor lobby" @click.prevent="add">
-        <window v-for="i in 3" :key="i" :index="$int(0, 0)" />
-      </div>
-      <div
+      <lobby />
+      <floor
         v-for="(f, i) in $store.state.floors"
         :key="i"
         class="floor"
         :data-id="i"
-      >
-        <window v-for="ii in 14" :key="ii" :index="$int(1000, 30000)" />
-        <div class="hover">
-          <span>Earning: {{ f.earning }}</span>
-          <span>Level: {{ f.level }}</span>
-          <button
-            class="btn btn-warning btn-sm"
-            :class="{
-              'btn-danger':
-                $store.state.money <
-                Math.floor(f.baseAmount * f.level) * Math.floor(f.level / 2) +
-                  f.baseAmount,
-            }"
-            :disabled="
-              $store.state.money <
-                Math.floor(f.baseAmount * f.level) * Math.floor(f.level / 2) +
-                  f.baseAmount
-            "
-            @click.prevent="$store.commit('upgrade', i)"
-          >
-            Upgrade ({{
-              Math.floor(f.baseAmount * f.level) * Math.floor(f.level / 2) +
-                f.baseAmount
-            }})
-          </button>
-        </div>
-      </div>
-      <div class="floor addition" @click.prevent="add">
-        <window v-for="i in 14" :key="i" :index="$int(0, 0)" />
-        <div class="hover buy">
-          <button
-            class="btn btn-success btn-sm"
-            :class="{
-              'btn-danger':
-                $store.state.money <
-                Math.floor(10000 * $store.state.floors.length),
-            }"
-            :disabled="
-              $store.state.money <
-                Math.floor(10000 * $store.state.floors.length)
-            "
-          >
-            Purchase new floor ({{
-              Math.floor(10000 * $store.state.floors.length)
-            }})
-          </button>
-        </div>
-      </div>
+        :index="i"
+        :floor="f"
+      />
+      <addition />
       <div ref="top" class="pt-5" />
     </div>
-    <div class="container-sm" id="top">
-      <div class="stats row">
-        <div class="col text-center">
-          <span class="text-center"
-            >Earning: {{ $store.state.moniesPS }}/s</span
-          >
-        </div>
-        <div class="col text-center">
-          <span>Total Floors: {{ $store.state.floors.length }}</span>
-        </div>
-        <div class="col text-center">
-          <span>Money: {{ $store.state.money }}</span>
-        </div>
-        <div class="col text-center">
-          <button
-            @click.prevent="$store.commit('reset')"
-            class="btn btn-danger btn-sm"
-          >
-            reset
-          </button>
-        </div>
-      </div>
-    </div>
+    <top />
   </div>
 </template>
